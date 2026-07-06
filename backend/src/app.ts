@@ -16,6 +16,7 @@ useExpressServer(app, {
   controllers: [UserController, OrderController, AuthController],
   classTransformer: true,
   validation: true,
+  routePrefix: '/api',
 });
 
 app.get('/', (req, res)=>{
