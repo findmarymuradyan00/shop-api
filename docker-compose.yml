@@ -17,6 +17,8 @@ services:
     restart: always
     ports:
       - "3001:3001"
+    environment:
+      MONGO_URI: mongodb://admin:admin123@mongo:27017/store_db?authSource=admin
     depends_on:
       - mongo
   frontend:
