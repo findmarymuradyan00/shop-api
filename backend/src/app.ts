@@ -14,7 +14,8 @@ connectDB();
 
 useExpressServer(app, {
   controllers: [UserController, OrderController, AuthController],
-  classTransformer: false,
+  classTransformer: true,
+  validation: true,
 });
 
 app.get('/', (req, res)=>{

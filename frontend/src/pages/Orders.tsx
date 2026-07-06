@@ -34,7 +34,8 @@ export default function Orders() {
 
   function isOwner(order: Order): boolean {
     if (!token) return false
-    const payload = JSON.parse(atob(token.split('.')[1]))
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(atob(base64))
     return payload.userId === order.userId
   }
 
@@ -52,13 +53,13 @@ export default function Orders() {
             {isOwner(order) && (
               <>
                 <button onClick={() => navigate(`/orders/${order._id}/edit`)}>Edit</button>
-                <button onClick={() => handleDelete(order._id)}>Delete</button>
+                <button className="danger" onClick={() => handleDelete(order._id)}>Delete</button>
               </>
             )}
           </li>
         ))}
       </ul>
-      {!orders.length && <p>No orders yet.</p>}
+      {!orders.length && <p className="empty-state">No orders yet.</p>}
     </div>
   )
 }

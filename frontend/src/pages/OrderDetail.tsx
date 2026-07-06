@@ -15,16 +15,18 @@ export default function OrderDetail() {
   }, [id])
 
   if (error) return <p className="error">{error}</p>
-  if (!order) return <p>Loading...</p>
+  if (!order) return <p className="loading">Loading...</p>
 
   return (
     <div>
       <h1>{order.title}</h1>
-      <p>Price: ${order.price}</p>
-      <p>Quantity: {order.quantity}</p>
-      {order.description && <p>Description: {order.description}</p>}
-      <p>Created: {new Date(order.createdAt).toLocaleString()}</p>
-      <Link to="/orders">Back to Orders</Link>
+      <div className="detail-card">
+        <p><strong>Price:</strong> ${order.price}</p>
+        <p><strong>Quantity:</strong> {order.quantity}</p>
+        {order.description && <p><strong>Description:</strong> {order.description}</p>}
+        <p><strong>Created:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+      </div>
+      <Link to="/orders" className="back-link">← Back to Orders</Link>
     </div>
   )
 }

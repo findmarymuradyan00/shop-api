@@ -22,7 +22,7 @@ export default function Users() {
           </li>
         ))}
       </ul>
-      {!users.length && <p>No users found.</p>}
+      {!users.length && <p className="empty-state">No users found.</p>}
     </div>
   )
 }
