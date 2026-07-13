@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { api, type Order } from '../api/client'
+import { api, isValidObjectId, type Order } from '../api/client'
 import { useAuth } from '../context/AuthContext'
 
 export default function Orders() {
@@ -58,13 +58,17 @@ export default function Orders() {
           <ul>
             {orders.map(order => (
               <li key={order._id}>
-                <Link to={`/orders/${order._id}`}>
-                  <strong>{order.title}</strong> — ${order.price} x {order.quantity}
-                </Link>
-                {isOwner(order) && (
+                {isValidObjectId(order._id) ? (
+                  <Link to={`/orders/${order._id}`}>
+                    <strong>{order.title}</strong> — ${order.price} x {order.quantity}
+                  </Link>
+                ) : (
+                  <span><strong>{order.title}</strong> — ${order.price} x {order.quantity}</span>
+                )}
+                {isOwner(order) && isValidObjectId(order._id) && (
                   <>
                     <button onClick={() => navigate(`/orders/${order._id}/edit`)}>Edit</button>
-                    <button className="danger" onClick={() => handleDelete(order._id)}>Delete</button>
+                    <button className="danger" onClick={() => handleDelete(order._id!)}>Delete</button>
                   </>
                 )}
               </li>

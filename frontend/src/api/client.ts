@@ -1,5 +1,9 @@
 const BASE_URL = '/api'
 
+export function isValidObjectId(id: string | undefined): id is string {
+  return typeof id === 'string' && /^[a-f\d]{24}$/i.test(id)
+}
+
 export interface User {
   _id: string
   email: string

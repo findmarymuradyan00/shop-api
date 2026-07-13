@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { api, type Order } from '../api/client'
+import { api, isValidObjectId, type Order } from '../api/client'
 
 export default function OrderDetail() {
   const { id } = useParams<{ id: string }>()
@@ -8,7 +8,10 @@ export default function OrderDetail() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    if (!id) return
+    if (!isValidObjectId(id)) {
+      setError('Invalid order ID')
+      return
+    }
     api.orders.getOne(id)
       .then(setOrder)
       .catch(() => setError('Order not found'))

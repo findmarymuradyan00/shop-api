@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { api, type Order } from '../api/client'
+import { api, isValidObjectId, type Order } from '../api/client'
 
 export default function OrderEdit() {
   const { id } = useParams<{ id: string }>()
@@ -12,7 +12,10 @@ export default function OrderEdit() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!id) return
+    if (!isValidObjectId(id)) {
+      setError('Invalid order ID')
+      return
+    }
     api.orders.getOne(id).then((order: Order) => {
       setTitle(order.title)
       setDescription(order.description || '')
@@ -26,8 +29,12 @@ export default function OrderEdit() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
+    if (!isValidObjectId(id)) {
+      setError('Invalid order ID')
+      return
+    }
     try {
-      await api.orders.update(id!, {
+      await api.orders.update(id, {
         title,
         description: description || undefined,
         price: Number(price),
