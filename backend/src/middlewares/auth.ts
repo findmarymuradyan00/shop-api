@@ -5,6 +5,10 @@ import {
 } from "routing-controllers";
 import jwt from "jsonwebtoken";
 
+export interface JwtPayload {
+  userId: string;
+}
+
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
 export class AuthMiddleware implements ExpressMiddlewareInterface {
@@ -20,14 +24,14 @@ export class AuthMiddleware implements ExpressMiddlewareInterface {
       throw new UnauthorizedError("no valid token provided");
     }
 
-    let decodedUser;
+    let decoded: JwtPayload;
     try {
-      decodedUser = jwt.verify(token, SECRET_KEY);
+      decoded = jwt.verify(token, SECRET_KEY) as JwtPayload;
     } catch (error) {
       throw new UnauthorizedError("Invalid or expired token");
     }
 
-    (req as any).user = decodedUser;
+    (req as any).user = decoded;
 
     next();
   }

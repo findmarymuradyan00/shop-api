@@ -3,7 +3,6 @@ const BASE_URL = '/api'
 export interface User {
   _id: string
   email: string
-  password: string
   createdAt: string
   updatedAt: string
 }
@@ -57,7 +56,7 @@ export const api = {
     register: (data: { email: string; password: string }) =>
       request<User>('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
     login: (data: { email: string; password: string }) =>
-      request<string>('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
+      request<{ token: string }>('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
   },
   users: {
     getAll: () => request<User[]>('/users'),

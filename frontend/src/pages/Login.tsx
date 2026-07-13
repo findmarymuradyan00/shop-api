@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { api } from '../api/client'
 import { useAuth } from '../context/AuthContext'
@@ -10,11 +10,11 @@ export default function Login() {
   const { setToken } = useAuth()
   const navigate = useNavigate()
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
     try {
-      const token = await api.auth.login({ email, password })
+      const { token } = await api.auth.login({ email, password })
       setToken(token)
       navigate('/')
     } catch (err: unknown) {

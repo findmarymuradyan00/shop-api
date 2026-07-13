@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, type ReactNode } from 'react'
 
 interface AuthContextType {
   token: string | null
@@ -21,13 +21,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = () => setToken(null)
-
-  useEffect(() => {
-    const stored = localStorage.getItem('token')
-    if (stored !== token) {
-      setTokenState(stored)
-    }
-  }, [token])
 
   return (
     <AuthContext.Provider value={{ token, setToken, logout }}>
