@@ -14,7 +14,6 @@ connectDB();
 useExpressServer(app, {
   controllers: [UserController, OrderController, AuthController],
   validation: true,
-  routePrefix: "/api",
 });
 
 app.get("/", (req, res) => {
