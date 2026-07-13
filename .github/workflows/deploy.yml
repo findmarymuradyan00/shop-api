@@ -19,8 +19,5 @@ jobs:
       - name: Stop old containers
         run: docker compose down || true
 
-      - name: Pull latest images
-        run: docker compose pull
-
       - name: Start containers
-        run: docker compose up -d
+        run: docker compose up -d --build
