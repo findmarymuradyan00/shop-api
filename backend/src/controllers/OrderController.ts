@@ -5,6 +5,7 @@ import {
   Param,
   Body,
   NotFoundError,
+  BadRequestError,
   Patch,
   UseBefore,
   Req,
@@ -36,6 +37,9 @@ export class OrderController {
 
   @Get("/:id")
   async getOne(@Param("id") _id: string) {
+    if (!_id || !Types.ObjectId.isValid(_id)) {
+      throw new BadRequestError("Invalid order ID");
+    }
     const order = await OrderModel.findById(_id);
 
     if (!order) {
@@ -48,6 +52,9 @@ export class OrderController {
   @Delete("/:id")
   @UseBefore(AuthMiddleware)
   async deleteOne(@Param("id") _id: string, @Req() req: any) {
+    if (!_id || !Types.ObjectId.isValid(_id)) {
+      throw new BadRequestError("Invalid order ID");
+    }
     const order = await OrderModel.findById(_id);
 
     if (!order) {
@@ -70,6 +77,9 @@ export class OrderController {
     @Body() userData: Partial<CreateOrderDto>,
     @Req() req: any
   ) {
+    if (!_id || !Types.ObjectId.isValid(_id)) {
+      throw new BadRequestError("Invalid order ID");
+    }
     const order = await OrderModel.findById(_id);
 
     if (!order) {
