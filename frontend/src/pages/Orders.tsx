@@ -60,10 +60,10 @@ export default function Orders() {
               <li key={order._id}>
                 {isValidObjectId(order._id) ? (
                   <Link to={`/orders/${order._id}`}>
-                    <strong>{order.title}</strong> — ${order.price} x {order.quantity}
+                    <strong>{order.title}</strong> — ${order.price ?? 0} x {order.quantity ?? 0}
                   </Link>
                 ) : (
-                  <span><strong>{order.title}</strong> — ${order.price} x {order.quantity}</span>
+                  <span><strong>{order.title}</strong> — ${order.price ?? 0} x {order.quantity ?? 0}</span>
                 )}
                 {isOwner(order) && isValidObjectId(order._id) && (
                   <>
